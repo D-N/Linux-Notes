@@ -5,7 +5,7 @@ Linux Command Line CheatSheet Notes
 
 Getting Help
 ------------
-There are multiple ways of getting help: primary one is man pages. To get the help page type:
+There are multiple ways of getting help: primary one is man pages. This should be the first place to check. To get the help page type:
 
 ```bash
 $ man <topicname> 
@@ -30,11 +30,21 @@ If you don't know the particular command you are trying to find you can search m
 $ apropos "subject"
 ```
 
+####Examples
+1) Learn more about man pages
+2) Check what does sudo command does
+
+```bash
+$ man man
+$ info sudo
+```
+
+
 Admin Priviledges
 -----------------
 To have complete access to anything - you will require root access. On an equivalent via
 ```bash
-$ su <command>
+$ su -c <command>
 ```
 which is not recommended under most circumstances. A more "reduced" version would be using 
 ```bash
@@ -42,6 +52,18 @@ $ sudo <command>
 ```
 before the commands requiring more access. Note that command executed with sudo will ask you for current user password, while command executed with su will require root password, which should not be given out to users.
 
+Su can also be used to switch user in bash for example:
+```bash
+$ su <username>
+```
+####Examples
+1) Switch user to "Test"
+2) Check what is located in /root, with and without admin priviledges
+```bash
+$ su Test
+$ ls /root
+$ sudo ls /root
+```
 
 Command Line History
 --------------------
@@ -49,11 +71,11 @@ To see the last 50 commands executed in console type
 ```bash
 $ history
 ```
-Command line history can also be searched by pressing up arrow key.
+Command line history can also be searched by pressing up arrow key in bash.
 
 
 Previous commands can be executed by either finding it via pressing up, then pressing enter when found.
-Shortcut to execute previous command is:
+Shortcut to execute last executed command is:
 ```bash
 $ !!
 ```
@@ -61,7 +83,7 @@ Earlier commands can be executed by typing:
 ```bash
 $ !18
 ```
-which will execute 18th command in history list (??)
+which will execute 18th command in history list. Note that new commands have larger number (i.e. if you had n commands in history, new command will have position n+1)
 
 
 Reboot, Sleep (Suspend), Shutdown Basics
@@ -78,7 +100,7 @@ To reboot you computer type:
 $ shutdown -r
 ```
 
-There are multiple options available with shutdown, here are just some of them:
+There are multiple options available with shutdown, for details see "man shutdown", here are just some of them:
 
 ```bash
 $ shutdown -r 10
@@ -131,20 +153,21 @@ $ userdel <username>
 To add a new group type:
 
 ```bash
-$ /usr/sbin/groupadd <groupname>
+$ groupadd <groupname>
 ```
 
 For each user you can check the groups he belongs to, and assign him to new groups as necessary:
 
 ```bash
 $ groups <username>
-$ /usr/sbin/usermod -G <groupname> <username>
+$ usermod -G <groupname> <username>
 ```
+Note that when using usermod -G requires you to list all (!) the groups the user will belong to, if the user already belongs to multiple groups and the new group should be just appended to the list of other groups user belongs to, also use an append option (-aG) (append group)
 
 Unused groups can be removed later:
 
 ```bash
-$ /usr/sbin/groupdel <groupname>
+$ groupdel <groupname>
 ```
 
 Searching for Installed Applications
@@ -154,6 +177,11 @@ To find any particular program type either of the following commands:
 ```bash
 $ which <programname>
 $ whereis <programname>
+```
+
+For example to check where firefox executables are use:
+```bash
+$ which "firefox"
 ```
 
 File System
